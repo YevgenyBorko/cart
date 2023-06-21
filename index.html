@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <title>Our cart</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-image: url("images/shopping-cart-background.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    section {
+      display: flex;
+    }
+
+    .product {
+      text-align: center;
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px; 
+      border: 5px solid #160909; 
+    }
+
+    .product img {
+      margin-bottom: 10px;
+      max-height: 150px; 
+    }
+
+    #cart-counter {
+      border: 1px solid #000;
+      padding: 5px;
+    }
+
+  </style>
+  <script>
+async function submitForm(name, price, img) {
+    $.ajax({
+    type: "POST",
+    url: "second_website.php",
+    data: { name: name, price: price, img: img },
+    success: function(response) {
+      console.log("Success");
+      $.ajax({
+      type: "POST",
+      url: "cart_count.php",
+      contentType: "application/json",
+      dataType: "json",
+      success: function(response) {
+        updateCartCounter(response.count);
+      }
+    });
+    }
+  });
+}
+
+function updateCartCounter(count) {
+  $('#cart-counter').text(count);
+}
+
+  </script>
+</head>
+<body>
+  <header>
+    <header>
+      <img src="images/mall-logo.png" alt="Mall logo"><br>
+      <a href="second_website.php">View All Products</a><br><br>
+      Amount of items <span id="cart-counter"></span>
+    </header>
+  </header>
+  <h2>Our Products</h2>
+
+  <section>
+    <div class="product">
+      <h3>Price: $150 <br> Game Console</h3>
+      <img src="images/game-console.png" style="width: 130px; height: 80px;" alt="Game Console">
+      <div class="button-container">
+        <button onclick="submitForm('Game Console', 'Price: $150', 'images/game-console.png')">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product">
+      <h3>Price: $50 <br> Makeup</h3>
+      <img src="images/makeup.PNG" style="width: 130px; height: 80px;" alt="Makeup">
+      <div class="button-container">
+        <button onclick="submitForm('Makeup', 'Price: $50', 'images/makeup.PNG')">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="product">
+      <h3>Price: $1 <br> Gum</h3>
+      <img src="images/gum.jpg" style="width: 130px; height: 80px;" alt="Gum">
+      <div class="button-container">
+        <button onclick="submitForm('Gum', 'Price: $1', 'images/gum.jpg')">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product">
+      <h3>Price: $180 <br> Sofa</h3>
+      <img src="images/sofa.png" style="width: 130px; height: 80px;" alt="Sofa">
+      <div class="button-container">
+        <button onclick="submitForm('Sofa', 'Price: $180', 'images/sofa.png')">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="product">
+      <h3>Price: $10 <br> Basketball</h3>
+      <img src="images/Basketball.png" style="width: 130px; height: 80px;" alt="Basketball">
+      <div class="button-container">
+        <button onclick="submitForm('Basketball', 'Price: $10', 'images/Basketball.png')">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product">
+      <h3>Price: $3 <br> Apples</h3>
+      <img src="images/apples.PNG" style="width: 130px; height: 80px;" alt="Apples">
+      <div class="button-container">
+        <button onclick="submitForm('Apples', 'Price: $3', 'images/apples.PNG')">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
